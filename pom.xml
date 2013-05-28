@@ -15,7 +15,22 @@
 
 	<name>Least Load plugin</name>
 	<description>Changes Jenkins to use a LoadBalancer that prefers least loaded nodes</description>
+
+	<developers>
+		<developer>
+			<id>bstick12</id>
+			<name>Brendan Nolan</name>
+			<email>brendan.nolan@gmail.com</email>
+		</developer>
+	</developers>
 	
+	<licenses>
+		<license>
+			<name>MIT license</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>			
+		</license>
+	</licenses>
+
 	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
 		artifacts that we need -->
 	<repositories>

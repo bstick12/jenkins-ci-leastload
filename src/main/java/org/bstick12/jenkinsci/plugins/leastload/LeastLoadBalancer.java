@@ -1,5 +1,7 @@
 package org.bstick12.jenkinsci.plugins.leastload;
 
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.WARNING;
 import hudson.model.LoadBalancer;
 import hudson.model.Computer;
 import hudson.model.Queue.Task;
@@ -11,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import static java.util.logging.Level.*;
 import java.util.logging.Logger;
 
 public class LeastLoadBalancer extends LoadBalancer {
@@ -57,18 +58,19 @@ public class LeastLoadBalancer extends LoadBalancer {
 
     private boolean assignGreedily(Mapping m, Task task, List<ExecutorChunk> executors, int i) {
         
-    	if (executors.size() == i || m.size() == i) {
+    	if (m.size() == i) {
     		return true;
         }
         
-        m.assign(i,executors.get(i));
-
-        if (m.isPartiallyValid() && assignGreedily(m,task,executors,i+1)) {
-            return true;
-        } else {
-	        m.assign(i,null);
-	        return false;
-        }
+    	for(ExecutorChunk ec : executors) {    	
+    		m.assign(i,ec);
+	        if (m.isPartiallyValid() && assignGreedily(m,task,executors,i+1)) {
+	            return true;
+	        }
+        } 
+	    
+    	m.assign(i,null);
+        return false;
         
     }
 	
