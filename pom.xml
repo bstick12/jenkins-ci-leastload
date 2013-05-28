@@ -8,16 +8,34 @@
 			built against? -->
 	</parent>
 
-	<groupId>org.bstick12.jenkins-ci.plugins</groupId>
 	<artifactId>leastload</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 
 	<name>Least Load plugin</name>
 	<description>Changes Jenkins to use a LoadBalancer that prefers least loaded nodes</description>
-	
-	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
-		artifacts that we need -->
+
+	<developers>
+		<developer>
+			<id>bstick12</id>
+			<name>Brendan Nolan</name>
+			<email>brendan.nolan@gmail.com</email>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>MIT license</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+
+ 	<scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/leastload-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/leastload-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/leastload-plugin</url>
+    </scm>
+
 	<repositories>
 		<repository>
 			<id>repo.jenkins-ci.org</id>
@@ -33,8 +51,6 @@
 	</pluginRepositories>
 
 	<properties>
-		<!-- explicitly specifying the latest version here because one we get from 
-			the parent POM tends to lag behind a bit -->
 		<maven-hpi-plugin.version>1.95</maven-hpi-plugin.version>
 	</properties>
 </project>
