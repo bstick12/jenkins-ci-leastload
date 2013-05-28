@@ -10,7 +10,7 @@
 
 	<groupId>org.bstick12.jenkins-ci.plugins</groupId>
 	<artifactId>leastload</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 
 	<name>Least Load plugin</name>
@@ -23,13 +23,19 @@
 			<email>brendan.nolan@gmail.com</email>
 		</developer>
 	</developers>
-	
+
 	<licenses>
 		<license>
 			<name>MIT license</name>
-			<url>http://www.opensource.org/licenses/mit-license.php</url>			
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
 		</license>
 	</licenses>
+
+	<scm>
+		<connection>git://github.com/bstick12/jenkins-ci-leastload.git</connection>
+		<developerConnection>scm:git:git@github.com/bstick12/jenkins-ci-leastload.git</developerConnection>
+		<url>https://github.com/bstick12/jenkins-ci-leastload</url>
+	</scm>
 
 	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
 		artifacts that we need -->
