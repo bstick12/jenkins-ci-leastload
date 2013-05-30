@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>leastload</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 
 	<name>Least Load plugin</name>
