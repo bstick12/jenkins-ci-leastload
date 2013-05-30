@@ -3,6 +3,7 @@ package org.bstick12.jenkinsci.plugins.leastload;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
 import hudson.model.LoadBalancer;
+import hudson.model.AbstractProject;
 import hudson.model.Computer;
 import hudson.model.Executor;
 import hudson.model.Queue.Task;
@@ -53,32 +54,63 @@ public class LeastLoadBalancer extends LoadBalancer {
 		
 		try {
 
-			List<ExecutorChunk> useableChunks = new ArrayList<ExecutorChunk>();
-            for (int i=0; i<ws.works.size(); i++) {
-                for (ExecutorChunk ec : ws.works(i).applicableExecutorChunks()) {
-                	useableChunks.add(ec);
-                }
-            }
-
-            Collections.sort(useableChunks, EXECUTOR_CHUNK_COMPARATOR);
-
-            Mapping m = ws.new Mapping();
-            if (assignGreedily(m,useableChunks,0)) {
-                assert m.isCompletelyValid();
-                return m;
-            } else {
-            	LOGGER.log(INFO, "Least load balancer was unable to define mapping. Falling back to double check");
-            	return getFallBackLoadBalancer().map(task, ws);
-            }
+			if(!isDisabled(task)) {
+	
+				List<ExecutorChunk> useableChunks = getApplicableSortedByLoad(ws);	
+	            Mapping m = ws.new Mapping();
+	            if (assignGreedily(m,useableChunks,0)) {
+	                assert m.isCompletelyValid();
+	                return m;
+	            } else {
+	            	LOGGER.log(INFO, "Least load balancer was unable to define mapping. Falling back to double check");
+	            	return getFallBackLoadBalancer().map(task, ws);
+	            }
+	            
+			} else {
+				return getFallBackLoadBalancer().map(task, ws);
+			}
             
 		} catch (Exception e) {
 			LOGGER.log(WARNING, "Least load balancer failed falling back", e);
 			return getFallBackLoadBalancer().map(task, ws);
-		}
-		
+		}		
 	}
 
-    private boolean assignGreedily(Mapping m, List<ExecutorChunk> executors, int i) {
+	/**
+	 * 
+	 * Extract a list of applicable {@link ExecutorChunk}s sorted in least loaded order
+	 * 
+	 * @param ws - The mapping worksheet
+	 * @return -A list of ExecutorChunk in least loaded order
+	 */
+	private List<ExecutorChunk> getApplicableSortedByLoad(MappingWorksheet ws) {
+		
+		List<ExecutorChunk> chunks = new ArrayList<ExecutorChunk>();
+		for (int i=0; i<ws.works.size(); i++) {
+		    for (ExecutorChunk ec : ws.works(i).applicableExecutorChunks()) {
+		    	chunks.add(ec);
+		    }
+		}
+		Collections.sort(chunks, EXECUTOR_CHUNK_COMPARATOR);
+		return chunks;
+		
+	} 
+
+    @SuppressWarnings("rawtypes")
+	private boolean isDisabled(Task task) {
+
+    	if(task instanceof AbstractProject) {
+    		AbstractProject project = (AbstractProject) task;
+    		@SuppressWarnings("unchecked")
+    		LeastLoadDisabledProperty property = (LeastLoadDisabledProperty) project.getProperty(LeastLoadDisabledProperty.class);
+    		return property.isLeastLoadDisabled();
+    	} else {
+    		return false;
+    	}
+    	
+    }
+
+	private boolean assignGreedily(Mapping m, List<ExecutorChunk> executors, int i) {
         
     	if (m.size() == i) {
     		return true;
