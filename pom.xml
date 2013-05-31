@@ -13,6 +13,7 @@
 
 	<name>Least Load plugin</name>
 	<description>Changes Jenkins to use a LoadBalancer that prefers least loaded nodes</description>
+	<url>http://wiki.jenkins-ci.org/display/JENKINS/Least+Load+Plugin</url>
 
 	<developers>
 		<developer>
@@ -29,11 +30,18 @@
 		</license>
 	</licenses>
 
- 	<scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/leastload-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/leastload-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/leastload-plugin</url>
-    </scm>
+	<scm>
+		<connection>scm:git:ssh://github.com/jenkinsci/leastload-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/leastload-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/leastload-plugin</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>maven.jenkins-ci.org</id>
+			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>
@@ -52,7 +60,7 @@
 	<properties>
 		<maven-hpi-plugin.version>1.95</maven-hpi-plugin.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.mockito</groupId>
