@@ -11,7 +11,7 @@ import jenkins.model.Jenkins;
  * @author brendan.nolan@gmail.com
  *
  */
-public class PluginImpl extends Plugin {
+public class LeastLoadPlugin extends Plugin {
 		
 	@Override
 	public void start() throws Exception {

@@ -21,7 +21,7 @@ public class LeastLoadDisabledProperty extends JobProperty<AbstractProject<?,?>>
 	}
 	
 	@Extension
-	public static class DescriptorImpl  extends JobPropertyDescriptor {
+	public static class DescriptorImpl extends JobPropertyDescriptor {
 
 		@Override
 		public String getDisplayName() {

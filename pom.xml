@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>leastload</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 
 	<name>Least Load plugin</name>
@@ -52,4 +52,13 @@
 	<properties>
 		<maven-hpi-plugin.version>1.95</maven-hpi-plugin.version>
 	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

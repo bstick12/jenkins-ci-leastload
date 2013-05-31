@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.common.base.Preconditions;
+
 /**
  * 
  * A {@link LoadBalancer} implementation that the leastload plugin uses to replace the default 
@@ -46,6 +48,7 @@ public class LeastLoadBalancer extends LoadBalancer {
 	 * 
 	 */
 	public LeastLoadBalancer(LoadBalancer fallback) {
+		Preconditions.checkNotNull(fallback, "You must provide a fallback implementation of the LoadBalancer");
 		this.fallback = fallback;
 	}
 	
@@ -71,7 +74,7 @@ public class LeastLoadBalancer extends LoadBalancer {
 			}
             
 		} catch (Exception e) {
-			LOGGER.log(WARNING, "Least load balancer failed falling back", e);
+			LOGGER.log(WARNING, "Least load balancer failed will use fallback", e);
 			return getFallBackLoadBalancer().map(task, ws);
 		}		
 	}
@@ -105,7 +108,7 @@ public class LeastLoadBalancer extends LoadBalancer {
     		LeastLoadDisabledProperty property = (LeastLoadDisabledProperty) project.getProperty(LeastLoadDisabledProperty.class);
     		return property.isLeastLoadDisabled();
     	} else {
-    		return false;
+    		return true;
     	}
     	
     }
@@ -138,7 +141,7 @@ public class LeastLoadBalancer extends LoadBalancer {
 		return fallback;
 	}
 	
-	public static class ExecutorChunkComparator implements Comparator<ExecutorChunk> {
+	protected static class ExecutorChunkComparator implements Comparator<ExecutorChunk> {
 
 		public int compare(ExecutorChunk ec1, ExecutorChunk ec2) {
 
